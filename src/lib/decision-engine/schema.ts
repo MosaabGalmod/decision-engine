@@ -70,19 +70,18 @@ const OperationsDeleteAccountSchema = z.object({
   context: ActionContextSchema
 });
 
-// Fallback schema to allow unknown actions to reach the engine and trigger UnknownActionStrategy
-const UnknownActionSchema = z.object({
+export const BaseActionSchema = z.object({
   domain: z.string(),
   actionType: z.string(),
   payload: z.record(z.string(), z.unknown()),
   context: ActionContextSchema
 });
 
-const KnownActionSchema = FinanceRefundSchema
-  .or(FinanceTransferSchema)
-  .or(DevOpsDeploySchema)
-  .or(DevOpsDropSchema)
-  .or(OperationsPermissionsSchema)
-  .or(OperationsDeleteAccountSchema);
-
-export const ProposedActionSchema = KnownActionSchema.or(UnknownActionSchema);
+export const ProposedActionSchema = z.discriminatedUnion('actionType', [
+  FinanceRefundSchema,
+  FinanceTransferSchema,
+  DevOpsDeploySchema,
+  DevOpsDropSchema,
+  OperationsPermissionsSchema,
+  OperationsDeleteAccountSchema
+]);
