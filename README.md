@@ -31,3 +31,6 @@ The system correctly identifies the immense risk (1000000 amount), the lack of p
 - [x] Deliberate Failure Test
 - [x] Architecture Snapshot (`ARCHITECTURE.md`)
 - [x] Two-Year Thesis (`THESIS.md`)
+
+### Live Demo
+🔗 **https://decision-engine-sepia.vercel.app/**
