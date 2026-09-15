@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     // Stage 1: Validate basic structure
     const baseParsed = BaseActionSchema.safeParse(body);
     if (!baseParsed.success) {
-      return NextResponse.json({ success: false, error: 'Invalid payload structure', details: baseParsed.error.errors }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Invalid payload structure', details: baseParsed.error.issues }, { status: 400 });
     }
 
     // Stage 2: Try to validate known action types
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       const knownActionTypes = ['refund', 'transfer', 'deploy', 'drop_database', 'modify_permissions', 'delete_account'];
       if (knownActionTypes.includes(baseParsed.data.actionType)) {
         // It's a known action type, but the payload is malformed (e.g., missing amount) -> REFUSE 400
-        return NextResponse.json({ success: false, error: 'Invalid payload for known action', details: parsed.error.errors }, { status: 400 });
+        return NextResponse.json({ success: false, error: 'Invalid payload for known action', details: parsed.error.issues }, { status: 400 });
       }
       
       // It's an unknown action type -> Pass to engine (will hit UnknownActionStrategy)
