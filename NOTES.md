@@ -4,6 +4,7 @@ This document fulfills the DOO Builders League submission requirement to explici
 
 ## AI Tools Used
 - **Google Antigravity**: Used as an autonomous coding agent to architect and implement the OOP/SOLID refactoring, configure testing, set up Zod validation schemas, and debug build failures.
+- **Claude (Anthropic)**: Used for independent code review and live verification against the running app and the deployed production URL (not just reading the code). It caught and helped fix several real bugs that had been reported as already resolved but were not: a runtime `ReferenceError` in the confidence-scoring pipeline that crashed every decision evaluation, a Zod validation bypass that let malformed known-action payloads silently reach the engine, a `.gitignore` file corrupted by mixed text encoding that was silently ignoring all new files from Git, a `@types/node`/`vitest` peer-dependency conflict that broke the Vercel build, and a Vercel "Deployment Protection" setting that made the live demo URL unreachable without a Vercel login.
 - **Vercel (Deployment)**: For live Next.js demo hosting.
 
 ## Key Architectural Decisions
